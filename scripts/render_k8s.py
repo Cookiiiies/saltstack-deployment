@@ -2,7 +2,6 @@ from jinja2 import Environment, FileSystemLoader
 from os import environ, listdir
 
 
-# Capture our current directory
 template_dir = '{dir}/k8s'.format(
     dir=environ['TRAVIS_BUILD_DIR']
 )
@@ -20,7 +19,7 @@ for jinja_template in [filename for filename in listdir(template_dir) if filenam
     
     path = "{dir}/k8s_descriptions/{name}".format(
         dir=environ['HOME'],
-        name=jinja_template.replace(".jinja2")
+        name=jinja_template.replace(".jinja2", "")
     )
     
     print("output to: {}\n".format(path))
