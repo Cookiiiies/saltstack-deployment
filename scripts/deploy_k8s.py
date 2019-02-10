@@ -4,7 +4,8 @@ import subprocess
 for deployment_yaml in sorted([
     filename for filename in listdir('{dir}/k8s_descriptions'.format(dir=environ['HOME'])) if filename.endswith(".yaml")
 ]):
-    subprocess.run(
+    
+    subprocess.check_call(
         [
             "kubectl",
             "apply",
