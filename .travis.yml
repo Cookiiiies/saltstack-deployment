@@ -29,6 +29,8 @@ install:
 # set in travis project: cluster_name, cluster_zone, cluster_project
 - pip install -r pip/requirements.txt
 - bash scripts/install_gcloud.sh
+- gcloud --version
+- kubectl version
 - mkdir -p ${HOME}/k8s_descriptions
 
 ## auth k8s cluster
