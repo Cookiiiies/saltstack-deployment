@@ -26,5 +26,5 @@ install:
 
 script:
 # Render kubernetes files
-- python scripts/render_k8s.py
-- python scripts/deploy_k8s.py
+- python2 scripts/render_k8s.py
+- python2 scripts/deploy_k8s.py
