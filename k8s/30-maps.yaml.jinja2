@@ -1,0 +1,39 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ DEPLOYMENT_NAME }}-config
+  namespace: {{ NAMESPACE }}
+data:
+ salt-master.conf:
+    file_roots:
+        base:
+            - /srv/salt
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ DEPLOYMENT_NAME }}-nginx-proxy
+  namespace: {{ NAMESPACE }}
+data:
+  salt-proxy.conf: |-
+    server {
+      listen 80 default_server;
+      listen [::]:80 default_server;
+      server_name {{ FQDN }};
+      charset UTF-8;
+      location /health {
+        access_log off;
+        return 200 "healthy\n";
+      }
+      location / {
+        proxy_redirect off;
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Ssl on;
+        proxy_pass_header Server;
+        proxy_read_timeout  3600;
+        proxy_pass          http://localhost:8081;
+      }
+    }

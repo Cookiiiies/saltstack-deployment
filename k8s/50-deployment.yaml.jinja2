@@ -1,0 +1,97 @@
+kind: "Deployment"
+apiVersion: "extensions/v1beta1"
+metadata:
+  name: {{ DEPLOYMENT_NAME }}
+  namespace: {{ NAMESPACE }}
+  labels:
+    name: {{ DEPLOYMENT_NAME }}
+spec:
+  replicas: {{ MIN_REPLICAS }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
+  selector:
+    matchLabels:
+      name: {{ DEPLOYMENT_NAME }}
+  template:
+    metadata:
+      name: {{ DEPLOYMENT_NAME }}
+      labels:
+        name: {{ DEPLOYMENT_NAME }}
+    spec:
+      containers:
+        - name: proxy
+          image: nginx
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d
+              name: nginx-proxy
+        - name: saltstack-master
+          image: {{ IMAGE }}
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8081
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8081
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "250m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/salt/master.d/
+              name: saltstack-master
+            - mountPath: /etc/salt/private_gpg/
+              name: gpg-key
+      volumes:
+        - name: saltstack-master
+          configMap:
+            name: {{ DEPLOYMENT_NAME }}-conf
+        - name: gpg-key
+          secret:
+            secretName: {{ DEPLOYMENT_NAME }}-gpg-key
+        - name: nginx-proxy
+          configMap:
+            name: {{ DEPLOYMENT_NAME }}-nginx-proxy
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ DEPLOYMENT_NAME }}-scaler
+  namespace: {{ NAMESPACE }}
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: {{ DEPLOYMENT_NAME }}
+  minReplicas: {{ MIN_REPLICAS }}
+  maxReplicas: {{ MAX_REPLICAS }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 80

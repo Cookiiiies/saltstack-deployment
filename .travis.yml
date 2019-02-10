@@ -1,0 +1,32 @@
+# Use Dockerized infrastructure
+sudo: false
+language: python
+# Cache our Gcloud SDK between commands
+cache:
+  directories:
+  - "$HOME/google-cloud-sdk/"
+env:
+- PATH=$PATH:${HOME}/google-cloud-sdk/bin CLOUDSDK_CORE_DISABLE_PROMPTS=1
+before_install:
+
+- openssl aes-256-cbc -K $encrypted_ffc671bd29c0_key -iv $encrypted_ffc671bd29c0_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
+- tar -xzf credentials.tar.gz
+
+install:
+# Set the correct project to deploy to
+# set in travis project: cluster_name, cluster_zone, cluster_project
+- pip install -r pip/requirements.txt
+- if [ ! -d ${HOME}/google-cloud-sdk ]; then
+     wget https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.zip && unzip google-cloud-sdk.zip && rm google-cloud-sdk.zip
+     google-cloud-sdk/install.sh --usage-reporting=true --path-update=true --additional-components kubectl
+  fi
+
+## auth k8s cluster
+- gcloud auth activate-service-account --key-file saltstack_deployment_secret.json
+- gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT}
+
+
+script:
+# Render kubernetes files
+- python scripts/render_k8s.py
+- python scripts/deploy_k8s.py
