@@ -16,10 +16,7 @@ install:
 # Set the correct project to deploy to
 # set in travis project: cluster_name, cluster_zone, cluster_project
 - pip install -r pip/requirements.txt
-- if [ ! -d ${HOME}/google-cloud-sdk ]; then
-     wget https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.zip && unzip google-cloud-sdk.zip && rm google-cloud-sdk.zip
-     google-cloud-sdk/install.sh --usage-reporting=true --path-update=true --additional-components kubectl
-  fi
+- bash scripts/install_gcloud.sh
 
 ## auth k8s cluster
 - gcloud auth activate-service-account --key-file saltstack_deployment_secret.json
