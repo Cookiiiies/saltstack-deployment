@@ -2,15 +2,18 @@ from jinja2 import Template
 from os import environ, listdir
 
 
+
 for jinja_template in [filename for filename in listdir('{}/k8s'.format(environ['TRAVIS_BUILD_DIR'])) if filename.endswith(".jinja2")]:
     
-    print("openfile: {}\n".format(jinja_template))
-    with open(jinja_template) as file:
+    path = "{dir}/k8s/{name}".format(dir=environ['TRAVIS_BUILD_DIR'], name=jinja_template)
+    print("openfile: {}\n".format(path))
+    with open(path) as file:
         
-        print("render file: {}\n".format(jinja_template))
+        print("render file")
         template = Template(file.readlines())
         output_filename = jinja_template.replace(".jinja2")
         
-        print("output to: {}\n".format(output_filename))
-        with open(output_filename, "w") as output_file:
+        path = "{dir}/k8s_descriptions/{name}".format(dir=environ['HOME'], name=output_filename)
+        print("output to: {}\n".format(path))
+        with open(path, "w") as output_file:
             output_file.write(template.render(environ))
