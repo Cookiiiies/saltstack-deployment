@@ -5,7 +5,12 @@ if [ ! -d ${HOME}/google-cloud-sdk ]; then
      google-cloud-sdk/install.sh --usage-reporting=true --path-update=true
 fi
 
-if [ ! -d ${HOME}/kubectl ]; then
-     $( mkdir -p ${HOME}/kubectl && cd ${HOME}/kubectl && curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl )
-     chmod +x ${HOME}/kubectl/kubectl
+if [ ! -f ${HOME}/kubectl/kubectl ]; then
+     $(
+        mkdir -p ${HOME}/kubectl && \
+        cd ${HOME}/kubectl && \
+        curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl && \
+        chmod +x ${HOME}/kubectl/kubectl
+     )
+
 fi

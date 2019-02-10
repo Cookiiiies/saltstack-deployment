@@ -5,6 +5,8 @@ language: python
 cache:
   directories:
   - "${HOME}/google-cloud-sdk/"
+  - "${HOME}/kubectl/"
+
 env:
 - PATH=$PATH:${HOME}/kubectl:${HOME}/google-cloud-sdk/bin CLOUDSDK_CORE_DISABLE_PROMPTS=1
 - CLUSTER_NAME=standard-cluster-1
