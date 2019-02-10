@@ -2,7 +2,7 @@ from jinja2 import Template
 from os import environ, listdir
 
 
-for jinja_template in [filename for filename in listdir('{}/k8s'.format(environ['HOME'])) if filename.endswith(".jinja2")]:
+for jinja_template in [filename for filename in listdir('{}/k8s'.format(environ['TRAVIS_BUILD_DIR'])) if filename.endswith(".jinja2")]:
     
     print("openfile: {}\n".format(jinja_template))
     with open(jinja_template) as file:
