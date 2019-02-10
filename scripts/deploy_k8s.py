@@ -1,15 +1,18 @@
 from os import listdir, environ
-import subprocess
+from subprocess import check_call
+
+
+dir = '{dir}/k8s_descriptions'.format(dir=environ['HOME'])
 
 for deployment_yaml in sorted([
-    filename for filename in listdir('{dir}/k8s_descriptions'.format(dir=environ['HOME'])) if filename.endswith(".yaml")
+    filename for filename in listdir(dir) if filename.endswith(".yaml")
 ]):
     
-    subprocess.check_call(
+    check_call(
         [
             "kubectl",
             "apply",
             "-f",
-            "{dir}/k8s/{name}".format(dir=environ['TRAVIS_BUILD_DIR'], name=deployment_yaml)
+            "{dir}/{name}".format(dir=dir, name=deployment_yaml)
         ]
     )
