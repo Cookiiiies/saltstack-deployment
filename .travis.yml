@@ -22,8 +22,8 @@ install:
 ## auth k8s cluster
 - gcloud auth activate-service-account --key-file saltstack_deployment_secret.json
 - gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT}
-- kubectl version
-- gcloud --version
+
+
 
 
 script:
