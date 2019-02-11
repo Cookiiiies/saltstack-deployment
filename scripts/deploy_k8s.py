@@ -1,5 +1,5 @@
 from os import listdir, environ
-from subprocess import check_call
+from subprocess import check_call, STDOUT
 
 
 dir = '{dir}/k8s_descriptions'.format(dir=environ['HOME'])
@@ -15,5 +15,7 @@ for deployment_yaml in sorted([
             "apply",
             "-f",
             path
-        ]
+        ],
+        stdout=STDOUT,
+        stderr=STDOUT
     )
