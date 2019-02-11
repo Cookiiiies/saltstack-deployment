@@ -7,7 +7,7 @@ env:
 - CLUSTER_NAME=standard-cluster-1
 - CLUSTER_PROJECT=gcp-home-dev
 - CLUSTER_ZONE=europe-west3-a
-- DEPLOYMENT_NAME=saltstack-master
+- DEPLOYMENT_NAME=master
 - FQDN=salt.th0r.de
 - IMAGE=gcr.io/gcp-home-dev/saltstack-master:661461ebdd18ce3294242d924ca97d0d7d5c3cf1
 - MAX_REPLICAS=1
