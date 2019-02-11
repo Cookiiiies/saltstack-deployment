@@ -10,7 +10,7 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-    name: {{ DEPLOYMENT_NAME }}-http
+    name: {{ DEPLOYMENT_NAME }}
   selector:
     name: {{ DEPLOYMENT_NAME }}
 ---
@@ -22,16 +22,11 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "{{ DEPLOYMENT_NAME }}"
 spec:
-  tls:
-    - secretName: {{ DEPLOYMENT_NAME }}-tls
-  backend:
-    serviceName: {{ DEPLOYMENT_NAME }}
-    servicePort: {{ DEPLOYMENT_NAME }}-http
   rules:
   - host: {{ FQDN }}
     http:
       paths:
       - path: /
         backend:
-          serviceName: {{ DEPLOYMENT_NAME }}
-          servicePort: {{ DEPLOYMENT_NAME }}-http
+          serviceName: {{ DEPLOYMENT_NAME }}-api
+          servicePort: 80
