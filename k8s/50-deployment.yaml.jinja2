@@ -77,21 +77,3 @@ spec:
         - name: nginx-proxy
           configMap:
             name: {{ DEPLOYMENT_NAME }}-nginx-proxy
----
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: {{ DEPLOYMENT_NAME }}-scaler
-  namespace: {{ NAMESPACE }}
-spec:
-  scaleTargetRef:
-    apiVersion: extensions/v1beta1
-    kind: Deployment
-    name: {{ DEPLOYMENT_NAME }}
-  minReplicas: {{ MIN_REPLICAS }}
-  maxReplicas: {{ MAX_REPLICAS }}
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 80
