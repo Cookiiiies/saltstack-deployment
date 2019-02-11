@@ -15,7 +15,5 @@ for deployment_yaml in sorted([
             "apply",
             "-f",
             path
-        ],
-        stdout=STDOUT,
-        stderr=STDOUT
+        ]
     )
