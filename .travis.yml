@@ -3,17 +3,18 @@
 language: python
 
 env:
-- CLOUDSDK_CORE_DISABLE_PROMPTS=1
-- CLUSTER_NAME=standard-cluster-1
-- CLUSTER_PROJECT=gcp-home-dev
-- CLUSTER_ZONE=europe-west3-a
-- DEPLOYMENT_NAME=master
-- FQDN=salt.th0r.de
-- IMAGE=gcr.io/gcp-home-dev/saltstack-master:661461ebdd18ce3294242d924ca97d0d7d5c3cf1
-- MAX_REPLICAS=1
-- MIN_REPLICAS=1
-- NAMESPACE=salt
-- GPG_PRIVATE_KEY=dGVzdAo=
+  global:
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+    - CLUSTER_NAME=standard-cluster-1
+    - CLUSTER_PROJECT=gcp-home-dev
+    - CLUSTER_ZONE=europe-west3-a
+    - DEPLOYMENT_NAME=master
+    - FQDN=salt.th0r.de
+    - IMAGE=gcr.io/gcp-home-dev/saltstack-master:661461ebdd18ce3294242d924ca97d0d7d5c3cf1
+    - MAX_REPLICAS=1
+    - MIN_REPLICAS=1
+    - NAMESPACE=salt
+    - GPG_PRIVATE_KEY=dGVzdAo=
 
 
 before_install:
