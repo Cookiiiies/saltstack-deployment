@@ -4,7 +4,7 @@ metadata:
   name: {{ DEPLOYMENT_NAME }}-config
   namespace: {{ NAMESPACE }}
 data:
- salt-master.conf:
+ salt-master.conf: |
     file_roots:
         base:
             - /srv/salt
