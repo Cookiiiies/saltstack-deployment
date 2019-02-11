@@ -32,6 +32,7 @@ install:
 - pip install -r pip/requirements.txt
 - bash scripts/install_gcloud.sh
 - gcloud --version
+- gcloud components install kubectl
 - kubectl version
 - mkdir -p ${HOME}/k8s_descriptions
 
