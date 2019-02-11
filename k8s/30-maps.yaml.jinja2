@@ -8,6 +8,9 @@ data:
     file_roots:
         base:
             - /srv/salt
+    rest_cherrypy:
+      port: 8081
+      disable_ssl: true
 ---
 kind: ConfigMap
 apiVersion: v1
