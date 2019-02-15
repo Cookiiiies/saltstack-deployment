@@ -70,7 +70,7 @@ spec:
       volumes:
         - name: saltstack-master
           configMap:
-            name: {{ DEPLOYMENT_NAME }}-conf
+            name: {{ DEPLOYMENT_NAME }}-config
         - name: gpg-key
           secret:
             secretName: {{ DEPLOYMENT_NAME }}-gpg-key
