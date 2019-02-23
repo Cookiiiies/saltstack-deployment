@@ -2,6 +2,9 @@
 
 language: python
 
+cache:
+  directories:
+    - /opt/sharedlibs
 env:
   global:
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
@@ -18,14 +21,16 @@ env:
 
 
 before_install:
-
 - openssl aes-256-cbc -K $encrypted_ffc671bd29c0_key -iv $encrypted_ffc671bd29c0_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
 - tar -xzf credentials.tar.gz
-- sudo apt-get install apt-transport-https
+- sudo apt-get install apt-transport-https git
 - export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
 - echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 - sudo apt-get update
+- mkdir -p /opt/sharedlibs/
+- if ls /opt/sharedlibs/.git ; then git -C /opt/sharedlibs/ pull; else git clone git@github.com:Cookiiiies/sharedlibs.git /opt/sharedlibs/; fi
+-
 
 install:
 - pip install -r pip/requirements.txt
@@ -43,5 +48,5 @@ install:
 
 script:
 # Render kubernetes files
-- python2 scripts/render_k8s.py
-- python2 scripts/deploy_k8s.py
+- python2 /opt/sharedlibs/python/render_k8s.py
+- python2 /opt/sharedlibs/python/deploy_k8s.py
