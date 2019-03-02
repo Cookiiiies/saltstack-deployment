@@ -44,10 +44,6 @@ spec:
           env:
             - name: GPG_PRIV_KEY_PATH
               value: "/etc/salt/secret_gpg/saltdeployer.gpg.priv"
-            - name: SSH_SALTDEPLOYER_PUB
-              value: "/etc/salt/secret_ssh/saltdeployer.pub"
-            - name: SSH_SALTDEPLOYER_PRIV
-              value: "/etc/salt/secret_ssh/saltdeployer.priv"
           readinessProbe:
             httpGet:
               path: /
@@ -74,7 +70,7 @@ spec:
               name: saltstack-master
             - mountPath: /etc/salt/secret_gpg/
               name: gpg-keys
-            - mountPath: /etc/salt/secret_ssh/
+            - mountPath: /etc/salt/ssh_keys/
               name: ssh-keys
       volumes:
         - name: saltstack-master
