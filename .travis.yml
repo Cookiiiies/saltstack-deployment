@@ -12,7 +12,7 @@ env:
     - CLUSTER_ZONE=europe-west3-a
     - DEPLOYMENT_NAME=master
     - FQDN=salt.th0r.de
-    - IMAGE=gcr.io/gcp-home-dev/saltstack-master:f11749c2545f6b04d1cae4934a4f14bb16dbe22a
+    - IMAGE=gcr.io/gcp-home-dev/saltstack-master:53701df223faa1f8c86c8712a4a6c4f0184f0794
     - MAX_REPLICAS=1
     - MIN_REPLICAS=1
     - NAMESPACE=salt
