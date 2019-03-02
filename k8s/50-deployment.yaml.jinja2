@@ -73,9 +73,9 @@ spec:
             - mountPath: /etc/salt/master.d/
               name: saltstack-master
             - mountPath: /etc/salt/secret_gpg/
-              name: ssh-keys
+              name: gpg-keys
             - mountPath: /etc/salt/secret_ssh/
-              name: gpg-key
+              name: ssh-key
       volumes:
         - name: saltstack-master
           configMap:
