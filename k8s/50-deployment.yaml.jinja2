@@ -80,7 +80,7 @@ spec:
         - name: saltstack-master
           configMap:
             name: {{ DEPLOYMENT_NAME }}-config
-        - name: gpg-key
+        - name: gpg-keys
           secret:
             secretName: {{ DEPLOYMENT_NAME }}-saltdeployer-gpg-keys
         - name: ssh-keys
