@@ -41,6 +41,9 @@ spec:
         - name: saltstack-master
           image: {{ IMAGE }}
           imagePullPolicy: Always
+          env:
+            - name: GPG_PRIV_KEY_PATH
+              value: "/etc/salt/private_gpg/saltdeployer.gpg.priv"
           readinessProbe:
             httpGet:
               path: /
@@ -66,6 +69,8 @@ spec:
             - mountPath: /etc/salt/master.d/
               name: saltstack-master
             - mountPath: /etc/salt/private_gpg/
+              name: ssh-keys
+            - mountPath: /etc/salt/ssh_keys/
               name: gpg-key
       volumes:
         - name: saltstack-master
@@ -73,7 +78,10 @@ spec:
             name: {{ DEPLOYMENT_NAME }}-config
         - name: gpg-key
           secret:
-            secretName: {{ DEPLOYMENT_NAME }}-gpg-key
+            secretName: {{ DEPLOYMENT_NAME }}-saltdeployer-gpg-keys
+        - name: ssh-keys
+          secret:
+            secretName: {{ DEPLOYMENT_NAME }}-saltdeployer-ssh-keys
         - name: nginx-proxy
           configMap:
             name: {{ DEPLOYMENT_NAME }}-nginx-proxy

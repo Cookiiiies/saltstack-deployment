@@ -5,12 +5,50 @@ metadata:
   namespace: {{ NAMESPACE }}
 data:
  salt-master.conf: |
-    file_roots:
-        base:
-            - /srv/salt
+
+    ############################################
+    # salt api configuration
+
     rest_cherrypy:
       port: 8081
-      disable_ssl: true
+      disable_ssl: True
+
+    ############################################
+    # pillar configuration
+
+    ext_pillar_first: True
+
+    pillar_merge_lists: true
+
+    ext_pillar:
+      - git:
+        - base git@github.com:Cookiiiies/pillar.git:
+          - env: base
+          - root: pillar
+          - privkey: /etc/salt/ssh_keys/saltdeployer.priv
+          - pubkey: /etc/salt/ssh_keys/saltdeployer.pub
+
+    ############################################
+    # fileserver configuration
+
+    fileserver_backend:
+      - roots
+      - gitfs
+
+    gitfs_remotes:
+      - git://github.com/Cookiiiies/salt.git
+
+    gitfs_provider: pygit2
+
+    gitfs_privkey: /etc/salt/ssh_keys/saltdeployer.priv
+
+    gitfs_pubkey: /etc/salt/ssh_keys/saltdeployer.pub
+
+    gitfs_root: 'salt'
+
+    file_roots:
+      base:
+        - /srv/salt
 ---
 kind: ConfigMap
 apiVersion: v1

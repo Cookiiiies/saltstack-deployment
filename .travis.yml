@@ -1,10 +1,9 @@
-# Use Dockerized infrastructure
-
 language: python
 
 cache:
   directories:
-    - /opt/sharedlibs
+    - "/opt/sharedlibs"
+    
 env:
   global:
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
@@ -17,35 +16,49 @@ env:
     - MAX_REPLICAS=1
     - MIN_REPLICAS=1
     - NAMESPACE=salt
-    - GPG_PRIVATE_KEY=dGVzdAo=
 
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_ffc671bd29c0_key -iv $encrypted_ffc671bd29c0_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
-- tar -xzf credentials.tar.gz
-- sudo apt-get install apt-transport-https git
-- export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
-- echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-- curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-- sudo apt-get update
-- mkdir -p /opt/sharedlibs/
-- /bin/bash -c 'if ls /opt/sharedlibs/.git ; then git -C /opt/sharedlibs/ pull; else git clone https://github.com/Cookiiiies/sharedlibs.git /opt/sharedlibs/; fi'
+  - >-
+      openssl aes-256-cbc -K $encrypted_ffc671bd29c0_key -iv $encrypted_ffc671bd29c0_iv
+      -in credentials.tar.gz.enc -out ~\/secrets/credentials.tar.gz -d
+  # credentials.tar.gz contains:
+  # - saltdeloyer-gpg.priv
+  # - saltdeployer.priv
+  # - saltdeloyer.pub
+  # - saltstack_deployment_secret.json
+  - tar -xzf credentials.tar.gz
+  - sudo apt-get install apt-transport-https git
+  - export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+  - >-
+      echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" |
+      sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+  - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+  - sudo apt-get update
+  - mkdir -p /opt/sharedlibs/
+  - >-
+      /bin/bash -c
+      'if ls /opt/sharedlibs/.git ;
+      then git -C /opt/sharedlibs/ pull;
+      else git clone https://github.com/Cookiiiies/sharedlibs.git /opt/sharedlibs/; fi'
 
 install:
-- pip install -r pip/requirements.txt
-- sudo apt-get install google-cloud-sdk kubectl
-- kubectl version --client
-- gcloud --version
-- mkdir -p ${HOME}/k8s_descriptions
+  - pip install -r pip/requirements.txt
+  - sudo apt-get install google-cloud-sdk kubectl
+  - kubectl version --client
+  - gcloud --version
+  - mkdir -p ${HOME}/k8s_descriptions
+  - gcloud auth activate-service-account --key-file saltstack_deployment_secret.json
+  - >-
+      gcloud container clusters get-credentials ${CLUSTER_NAME}
+      --zone ${CLUSTER_ZONE}
+      --project ${CLUSTER_PROJECT}
 
-## auth k8s cluster
-- gcloud auth activate-service-account --key-file saltstack_deployment_secret.json
-- gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT}
-
-
-
+before_script:
+  - export GPG_SALTDEPLOYER_PRIVATE_KEY=$(base64 -w0 saltdeloyer-gpg.priv)
+  - export SSH_SALTDEPOYER_PUB=$(base64 -w0 saltdeployer.pub)
+  - export SSH_SALTDEPLOYER_PRIV=$(base64 -w0 saltdeployer.priv)
 
 script:
-# Render kubernetes files
-- python2 /opt/sharedlibs/python/render_k8s.py
-- python2 /opt/sharedlibs/python/deploy_k8s.py
+  - python2 /opt/sharedlibs/python/render_k8s.py
+  - python2 /opt/sharedlibs/python/deploy_k8s.py
