@@ -14,7 +14,7 @@ spec:
       maxSurge: 2
   selector:
     matchLabels:
-      name: {{ DEPLOYMENT_NAME }}
+      name: {{ DEPLOYMENT_NAME }}-master
   template:
     metadata:
       name: {{ DEPLOYMENT_NAME }}

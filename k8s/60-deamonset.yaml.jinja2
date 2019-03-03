@@ -11,6 +11,9 @@ spec:
       name: minion
       labels:
         name: minion
+  selector:
+    matchLabels:
+      name: {{ DEPLOYMENT_NAME }}-minion
     spec:
       containers:
       - name: saltstack-minion

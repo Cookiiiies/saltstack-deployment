@@ -15,7 +15,7 @@ spec:
       targetPort: 4506
       name: {{ DEPLOYMENT_NAME }}-4506
   selector:
-    name: {{ DEPLOYMENT_NAME }}
+    name: {{ DEPLOYMENT_NAME }}-master
 ---
 apiVersion: v1
 kind: Service
@@ -31,7 +31,7 @@ spec:
       targetPort: 80
       name: {{ DEPLOYMENT_NAME }}
   selector:
-    name: {{ DEPLOYMENT_NAME }}
+    name: {{ DEPLOYMENT_NAME }}-master
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
