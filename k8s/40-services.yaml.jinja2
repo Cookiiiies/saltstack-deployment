@@ -10,10 +10,10 @@ spec:
   ports:
     - port: 4505
       targetPort: 4505
-      name: {{ DEPLOYMENT_NAME }}
+      name: {{ DEPLOYMENT_NAME }}-4505
     - port: 4506
       targetPort: 4506
-      name: {{ DEPLOYMENT_NAME }}
+      name: {{ DEPLOYMENT_NAME }}-4506
   selector:
     name: {{ DEPLOYMENT_NAME }}
 ---
