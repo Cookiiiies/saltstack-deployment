@@ -29,7 +29,7 @@ spec:
             memory: 200Mi
         volumeMounts:
           - mountPath: /etc/salt/minion.d/
-            name: saltstack-master
+            name: saltstack-minion
       terminationGracePeriodSeconds: 60
       volumes:
         - name: saltstack-minion
