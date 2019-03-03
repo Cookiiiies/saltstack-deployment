@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: minion
+  namespace: {{ NAMESPACE }}
+  labels:
+    name: minion
+spec:
+  template:
+    metadata:
+      name: minion
+      labels:
+        name: minion
+    spec:
+      containers:
+      - name: saltstack-minion
+        image: {{ IMAGE_MINION }}
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: 500Mi
+            cpu: 400m
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+          - mountPath: /etc/salt/minion.d/
+            name: saltstack-master
+      terminationGracePeriodSeconds: 60
+      volumes:
+        - name: saltstack-minion
+          configMap:
+            name: {{ DEPLOYMENT_NAME }}-minion-config

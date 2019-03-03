@@ -1,7 +1,20 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: {{ DEPLOYMENT_NAME }}-config
+  name: {{ DEPLOYMENT_NAME }}-minion-config
+  namespace: {{ NAMESPACE }}
+data:
+ salt-minion.conf: |
+
+    ############################################
+    # salt master configuration
+    master: {{ NAMESPACE }}.{{ DEPLOYMENT_NAME }}-master
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ DEPLOYMENT_NAME }}-master-config
   namespace: {{ NAMESPACE }}
 data:
  salt-master.conf: |

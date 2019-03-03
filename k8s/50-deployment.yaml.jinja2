@@ -39,7 +39,7 @@ spec:
             - mountPath: /etc/nginx/conf.d
               name: nginx-proxy
         - name: saltstack-master
-          image: {{ IMAGE }}
+          image: {{ IMAGE_MASTER }}
           imagePullPolicy: Always
           env:
             - name: GPG_PRIV_KEY_PATH
@@ -64,7 +64,8 @@ spec:
               memory: "2Gi"
               cpu: "1000m"
           ports:
-            - containerPort: 80
+            - containerPort: 4505
+            - containerPort: 4506
           volumeMounts:
             - mountPath: /etc/salt/master.d/
               name: saltstack-master
@@ -75,7 +76,7 @@ spec:
       volumes:
         - name: saltstack-master
           configMap:
-            name: {{ DEPLOYMENT_NAME }}-config
+            name: {{ DEPLOYMENT_NAME }}-master-config
         - name: gpg-keys
           secret:
             secretName: {{ DEPLOYMENT_NAME }}-saltdeployer-gpg-keys
