@@ -6,14 +6,15 @@ metadata:
   labels:
     name: {{ DEPLOYMENT_NAME }}-minion
 spec:
+  selector:
+    matchLabels:
+      name: {{ DEPLOYMENT_NAME }}-minion
   template:
     metadata:
       name: {{ DEPLOYMENT_NAME }}-minion
       labels:
         name: {{ DEPLOYMENT_NAME }}-minion
-  selector:
-    matchLabels:
-      name: {{ DEPLOYMENT_NAME }}-minion
+
     spec:
       containers:
       - name: saltstack-minion
