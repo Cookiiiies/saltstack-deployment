@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: minion
+  name: {{ DEPLOYMENT_NAME }}-minion
   namespace: {{ NAMESPACE }}
   labels:
-    name: minion
+    name: {{ DEPLOYMENT_NAME }}-minion
 spec:
   template:
     metadata:
-      name: minion
+      name: {{ DEPLOYMENT_NAME }}-minion
       labels:
-        name: minion
+        name: {{ DEPLOYMENT_NAME }}-minion
   selector:
     matchLabels:
       name: {{ DEPLOYMENT_NAME }}-minion

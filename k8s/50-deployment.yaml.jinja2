@@ -1,10 +1,10 @@
 kind: "Deployment"
 apiVersion: "extensions/v1beta1"
 metadata:
-  name: {{ DEPLOYMENT_NAME }}
+  name: {{ DEPLOYMENT_NAME }}-master
   namespace: {{ NAMESPACE }}
   labels:
-    name: {{ DEPLOYMENT_NAME }}
+    name: {{ DEPLOYMENT_NAME }}-master
 spec:
   replicas: {{ MIN_REPLICAS }}
   strategy:
@@ -17,9 +17,9 @@ spec:
       name: {{ DEPLOYMENT_NAME }}-master
   template:
     metadata:
-      name: {{ DEPLOYMENT_NAME }}
+      name: {{ DEPLOYMENT_NAME }}-master
       labels:
-        name: {{ DEPLOYMENT_NAME }}
+        name: name: {{ DEPLOYMENT_NAME }}-master
     spec:
       containers:
         - name: proxy
