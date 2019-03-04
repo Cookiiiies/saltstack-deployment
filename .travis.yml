@@ -11,7 +11,7 @@ env:
     - CLUSTER_PROJECT=gcp-home-dev
     - CLUSTER_ZONE=europe-west3-a
     - DEPLOYMENT_NAME=salt
-    - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:377e674f80345c688f65baedbae9be43a69de52f
+    - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:a2fdab3f716fe27da0b7acee9536b3b74f664cef
     - IMAGE_MINION=gcr.io/gcp-home-dev/github.com/cookiiiies/images:b8604f71756937e3ae05a5413488ab6fdeebcbba
     - IMAGE_NGINX=gcr.io/gcp-home-dev/github.com/cookiiiies/images:38653e4be94ea748251de9c5c86a32106278e481
     - MAX_REPLICAS=1
