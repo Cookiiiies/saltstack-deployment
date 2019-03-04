@@ -23,18 +23,22 @@ spec:
     spec:
       containers:
         - name: proxy
-          image: nginx
+          image: {{ IMAGE_NGINX }}
           imagePullPolicy: Always
+          env:
+            - name: SALT_API_HOST
+              value: {{ SALT_API_HOST }}
           readinessProbe:
             httpGet:
               path: /health
-              port: 80
+              port: 443
           livenessProbe:
             httpGet:
               path: /health
-              port: 80
+              port: 443
           ports:
             - containerPort: 80
+            - containerPort: 443
           volumeMounts:
             - mountPath: /etc/nginx/conf.d
               name: nginx-proxy
@@ -44,6 +48,10 @@ spec:
           env:
             - name: GPG_PRIV_KEY_PATH
               value: "/etc/salt/secret_gpg/saltdeployer.gpg.priv"
+            - name: API_USERNAME
+              value: "{{ API_USERNAME }}"
+            - name: API_PASSWORD
+              value: "{{ API_PASSWORD }}"
           readinessProbe:
             httpGet:
               path: /

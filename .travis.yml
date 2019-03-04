@@ -11,12 +11,15 @@ env:
     - CLUSTER_PROJECT=gcp-home-dev
     - CLUSTER_ZONE=europe-west3-a
     - DEPLOYMENT_NAME=salt
-    - FQDN=salt.th0r.de
-    - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:53701df223faa1f8c86c8712a4a6c4f0184f0794
-    - IMAGE_MINION=gcr.io/gcp-home-dev/github.com/cookiiiies/images:8cbb1f1086d4c8d10d7debba5c59c6e100160cf7
+    - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:377e674f80345c688f65baedbae9be43a69de52f
+    - IMAGE_MINION=gcr.io/gcp-home-dev/github.com/cookiiiies/images:08b0c2236263267bcd5dbd782c2c5dcf3724be58
+    - IMAGE_NGINX=gcr.io/gcp-home-dev/github.com/cookiiiies/images:1d3a548f81ba67a1141a27f863afb67b4ac16f77
     - MAX_REPLICAS=1
     - MIN_REPLICAS=1
     - NAMESPACE=salt
+    - API_PASSWORD=test
+    - API_USERNAME=saltdeployer
+    - SALT_API_HOST=salt.th0r.lan
 
 
 before_install:

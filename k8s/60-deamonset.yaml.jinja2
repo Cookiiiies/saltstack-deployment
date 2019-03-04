@@ -9,17 +9,25 @@ spec:
   selector:
     matchLabels:
       name: {{ DEPLOYMENT_NAME }}-minion
+  hostAliases:
+    - ip: "{{ DEPLOYMENT_NAME }}-master"
+      hostnames:
+        - "{{ SALT_API_HOST }}"
   template:
     metadata:
       name: {{ DEPLOYMENT_NAME }}-minion
       labels:
         name: {{ DEPLOYMENT_NAME }}-minion
-
     spec:
       containers:
       - name: saltstack-minion
         image: {{ IMAGE_MINION }}
         imagePullPolicy: Always
+        env:
+          - name: API_USERNAME
+            value: "{{ API_USERNAME }}"
+          - name: API_PASSWORD
+            value: "{{ API_PASSWORD }}"
         resources:
           limits:
             memory: 500Mi

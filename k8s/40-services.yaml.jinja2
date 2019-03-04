@@ -32,20 +32,4 @@ spec:
       name: {{ DEPLOYMENT_NAME }}-80
   selector:
     name: {{ DEPLOYMENT_NAME }}-master
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: {{ DEPLOYMENT_NAME }}-ingress
-  namespace: {{ NAMESPACE }}
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: "{{ DEPLOYMENT_NAME }}"
-spec:
-  rules:
-    - host: {{ FQDN }}
-      http:
-        paths:
-        - path: /
-          backend:
-            serviceName: {{ DEPLOYMENT_NAME }}-api
-            servicePort: 80
+
