@@ -30,12 +30,12 @@ spec:
               value: {{ SALT_API_HOST }}
           readinessProbe:
             httpGet:
-              scheme: https
+              scheme: HTTPS
               path: /health
               port: 443
           livenessProbe:
             httpGet:
-              scheme: https
+              scheme: HTTPS
               path: /health
               port: 443
           ports:
