@@ -15,10 +15,6 @@ spec:
       labels:
         name: {{ DEPLOYMENT_NAME }}-minion
     spec:
-      hostAliases:
-        - ip: "{{ DEPLOYMENT_NAME }}-master"
-          hostnames:
-            - "{{ SALT_API_HOST }}"
       containers:
       - name: saltstack-minion
         image: {{ IMAGE_MINION }}
@@ -28,6 +24,8 @@ spec:
             value: "{{ API_USERNAME }}"
           - name: API_PASSWORD
             value: "{{ API_PASSWORD }}"
+          - name: SALT_API_HOST
+            value: "{{ DEPLOYMENT_NAME }}-master"
         resources:
           limits:
             memory: 500Mi
