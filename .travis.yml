@@ -13,7 +13,7 @@ env:
     - DEPLOYMENT_NAME=salt
     - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:377e674f80345c688f65baedbae9be43a69de52f
     - IMAGE_MINION=gcr.io/gcp-home-dev/github.com/cookiiiies/images:b8604f71756937e3ae05a5413488ab6fdeebcbba
-    - IMAGE_NGINX=gcr.io/gcp-home-dev/github.com/cookiiiies/images:1fe5c471146d14a520ea1f6649d36194766a1cdd
+    - IMAGE_NGINX=gcr.io/gcp-home-dev/github.com/cookiiiies/images:d3606534a5382023d536d9c1475fbfd330f0e530
     - MAX_REPLICAS=1
     - MIN_REPLICAS=1
     - NAMESPACE=salt
