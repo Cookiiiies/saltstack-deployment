@@ -13,14 +13,13 @@ env:
     - DEPLOYMENT_NAME=salt
     - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:377e674f80345c688f65baedbae9be43a69de52f
     - IMAGE_MINION=gcr.io/gcp-home-dev/github.com/cookiiiies/images:08b0c2236263267bcd5dbd782c2c5dcf3724be58
-    - IMAGE_NGINX=gcr.io/gcp-home-dev/github.com/cookiiiies/images:1d3a548f81ba67a1141a27f863afb67b4ac16f77
+    - IMAGE_NGINX=gcr.io/gcp-home-dev/github.com/cookiiiies/images:cf44480448bd0c48eb7c646066150b8d4fb4f3ee
     - MAX_REPLICAS=1
     - MIN_REPLICAS=1
     - NAMESPACE=salt
     - API_USERNAME=saltdeployer
     - SALT_API_HOST=salt.th0r.lan
     - secure: "NI8vGrzHw77nkSXv/tfMwey3Tm6X4gKWLGztwtLQQ7oeDigtYiZHkbVN0ETxNkerm5Dg+FkJz+dkm9jOcdri+N6c1982IcjrPQQLBBNMzZDRnA/QiwuDeQ1Fhq/Z/2UKHWKKG7DG4bGGblf2T1jopnFPG4mCDYqQIQSuMDvO0jmdKA3cjm05uhRGytohmlLueDoPPW1tDD7mu8Apk36CVb7BDqDBaQFlnLv7+Vldxd499CcaOFF5/ZrpC9/XVa42bv31VuhiDhdTcE3ARvOIHuaTH7S0BYXTXwOz0Fzhh7OKqUWSnCz0MOEQppFfjXx1F8kesA1K5Hau6EP/23ueQxxDgHIWy/4L1YeGuroDbetDL2iBgfcV+KaoDbpCYqOwPQjeGczwP1pU+xGD0GitIiJc5t+bJLxF7Klvnjz1SkAOTN48LY0KJgheM7SlmTthqPdDQnLIFCKo6dW7KTzyHFgJrAHh2q7+1jonjxYnnUndA4O3kA266pUb2u/kDUqOCaElgyc6rTHvLSR+AddBauz/1JkfU2OvOJTW8VR7NIL1kS5tjmtD0dMNvzkxCik2o2c82w5Zk/mkZ8Yn5J32on43bXu6nFe8g3QY2uR6UuGGX8g09aKpQ06R5Lvn1ks8z1X78dXe5m7fjQ/AbQxKfulFjj9hGVIvfyTudzURGqQ="
-
 
 before_install:
   - >-
