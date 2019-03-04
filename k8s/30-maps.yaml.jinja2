@@ -29,7 +29,7 @@ data:
     external_auth:
       pam:
         {{ API_USERNAME }}:
-          - '@wheel'
+          - '@wheel':
             - key.gen_accept
 
     ############################################
