@@ -44,6 +44,7 @@ spec:
           volumeMounts:
             - mountPath: /etc/nginx/conf.d
               name: nginx-proxy
+
         - name: saltstack-master
           image: {{ IMAGE_MASTER }}
           imagePullPolicy: Always
@@ -54,6 +55,8 @@ spec:
               value: "{{ API_USERNAME }}"
             - name: API_PASSWORD
               value: "{{ API_PASSWORD }}"
+            - name: LOG_LEVEL
+              value: "{{ LOG_LEVEL }}"
           readinessProbe:
             httpGet:
               path: /
@@ -83,6 +86,42 @@ spec:
               name: gpg-keys
             - mountPath: /etc/salt/ssh_keys/
               name: ssh-keys
+            - mountPath: /var/run
+              name: saltstack-pid
+
+        - name: saltstack-api
+          image: {{ IMAGE_API }}
+          imagePullPolicy: Always
+          env:
+            - name: LOG_LEVEL
+              value: "{{ LOG_LEVEL }}"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8081
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8081
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "250m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+          ports:
+            - containerPort: 8081
+          volumeMounts:
+            - mountPath: /var/run/
+              name: saltstack-pid
+            - mountPath: /etc/salt/master.d/
+              name: saltstack-master
+
       volumes:
         - name: saltstack-master
           configMap:
@@ -96,3 +135,5 @@ spec:
         - name: nginx-proxy
           configMap:
             name: {{ DEPLOYMENT_NAME }}-nginx-proxy
+        - name: saltstack-pid
+          emptyDir: {}
