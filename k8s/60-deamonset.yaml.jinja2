@@ -26,6 +26,29 @@ spec:
             value: "{{ API_PASSWORD }}"
           - name: SALT_API_HOST
             value: "{{ DEPLOYMENT_NAME }}-api"
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - 'salt-call status.master {{ DEPLOYMENT_NAME }}-master | grep True'
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - 'salt-call status.master {{ DEPLOYMENT_NAME }}-master | grep True'
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - 'salt-call event.send /minion/shutdown'
         resources:
           limits:
             memory: 500Mi
