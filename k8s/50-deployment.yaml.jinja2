@@ -122,7 +122,7 @@ spec:
             - mountPath: /var/run/
               name: saltstack-pid
             - mountPath: /etc/salt/master.d/
-              name: saltstack-master
+              name: saltstack-conf
 
       volumes:
         - name: master-conf
@@ -157,26 +157,26 @@ spec:
       template:
         spec:
           containers:
-          - name: certbot
-            image: {{ IMAGE_CERTBOT }}
-            env:
-              - name: BUCKET_ID
-                value: {{ PILLAR_BUCKET_ID }}
-              - name: PROJECT_ID
-                value: {{ PILLAR_BUCKET_PROJECT }}
-              - name: DOMAINS
-                value: {{ DOMAINS }}
-              - name: CERTBOT_SERVER
-                value: {{ CERTBOT_SERVER }}
-              - name: BACKUP_FILENAME
-                value: {{ DEPLOYMENT_NAME }}-master-certbot.tar.gz
-              - name: GOOGLE_CREDENTIALS_FILE_DNS
-                value: "/secrets/dns.j"
-            volumeMounts:
-              - mountPath: /secrets/
-                name: gcp-secret
+            - name: certbot
+              image: {{ IMAGE_CERTBOT }}
+              env:
+                - name: BUCKET_ID
+                  value: {{ PILLAR_BUCKET_ID }}
+                - name: PROJECT_ID
+                  value: {{ PILLAR_BUCKET_PROJECT }}
+                - name: DOMAINS
+                  value: {{ DOMAINS }}
+                - name: CERTBOT_SERVER
+                  value: {{ CERTBOT_SERVER }}
+                - name: BACKUP_FILENAME
+                  value: {{ DEPLOYMENT_NAME }}-master-certbot.tar.gz
+                - name: GOOGLE_CREDENTIALS_FILE_DNS
+                  value: "/secrets/dns.j"
+              volumeMounts:
+                - mountPath: /secrets/
+                  name: gcp-secret
           restartPolicy: OnFailure
-        volumes:
+          volumes:
             - name: gcp-secret
               secret:
                 secretName: {{ DEPLOYMENT_NAME }}-certbot-gcp
