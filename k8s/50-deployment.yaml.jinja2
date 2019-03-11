@@ -171,7 +171,9 @@ spec:
                 - name: BACKUP_FILENAME
                   value: {{ DEPLOYMENT_NAME }}-master-certbot.tar.gz
                 - name: GOOGLE_CREDENTIALS_FILE_DNS
-                  value: "/secrets/dns.j"
+                  value: "/secrets/dns.json"
+                - name: GOOGLE_CREDENTIALS_FILE_BUCKET
+                  value: "/secrets/bucket.json"
               volumeMounts:
                 - mountPath: /secrets/
                   name: gcp-secret
