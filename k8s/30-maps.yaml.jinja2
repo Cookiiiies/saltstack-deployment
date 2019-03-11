@@ -43,8 +43,8 @@ data:
         - base git@github.com:Cookiiiies/pillar.git:
           - env: base
           - root: pillar
-          - privkey:/etc/salt/secrets/ssh_keys/saltdeployer.priv
-          - pubkey:/etc/salt/secrets/ssh_keys/saltdeployer.pub
+          - privkey: /etc/salt/secrets/ssh_keys/saltdeployer.priv
+          - pubkey: /etc/salt/secrets/ssh_keys/saltdeployer.pub
 
       - google_storage:
         - credentials: /etc/salt/secrets/gcp/credentials.json
@@ -64,9 +64,9 @@ data:
 
     gitfs_provider: pygit2
 
-    gitfs_privkey:/etc/salt/secrets/ssh_keys/saltdeployer.priv
+    gitfs_privkey: /etc/salt/secrets/ssh_keys/saltdeployer.priv
 
-    gitfs_pubkey:/etc/salt/secrets/ssh_keys/saltdeployer.pub
+    gitfs_pubkey: /etc/salt/secrets/ssh_keys/saltdeployer.pub
 
     gitfs_root: 'salt'
 
