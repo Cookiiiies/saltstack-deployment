@@ -23,7 +23,7 @@ env:
     - API_USERNAME=saltdeployer
     - SALT_API_HOST=salt.th0r.lan
     - CERTBOT_SERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
-    - PILLAR_BUCKET_CREDENTIAL=/tmp/path.json
+    - PILLAR_BUCKET_CREDENTIAL=/etc/salt/secrets/gcp/credentials.json
     - PILLAR_BUCKET_PROJECT=gcp-home-dev
     - PILLAR_BUCKET_ID=certbot-bucket-th0r
     - DOMAINS=salt.th0r.de
@@ -72,6 +72,7 @@ before_script:
   - export SSH_SALTDEPLOYER_PRIV=$(base64 -w0 saltdeployer.priv)
   - export CERTBOT_BUCKET_CREDENTIAL=$(base64 -w0 dns_secret.json)
   - export CERTBOT_DNS_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
+  - export PILLAR_BUCKET_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
 
 script:
   - python2 /opt/sharedlibs/python/render_k8s.py
