@@ -15,12 +15,18 @@ env:
     - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:fd4816cc60c21c505ed3e46cf89e6e70f316f5d5
     - IMAGE_MINION=gcr.io/gcp-home-dev/saltstack-minion:00770b6f9f88d765c519c8948e114d4d52bd9de7
     - IMAGE_NGINX=gcr.io/gcp-home-dev/salt-nginx:38653e4be94ea748251de9c5c86a32106278e481
+    - IMAGE_CERTBOT=gcr.io/gcp-home-dev/certbot:75f1f715dd3b316a78b4d03d7c7da960e8bef525
     - IMAGE_API=gcr.io/gcp-home-dev/saltstack-api:a9b96145dad6f56a73e2f4a9a4a7f25d6db7dbbc
     - MAX_REPLICAS=1
     - MIN_REPLICAS=1
     - NAMESPACE=salt
     - API_USERNAME=saltdeployer
     - SALT_API_HOST=salt.th0r.lan
+    - CERTBOT_SERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
+    - PILLAR_BUCKET_CREDENTIAL=/tmp/path.json
+    - PILLAR_BUCKET_PROJECT=gcp-home-dev
+    - PILLAR_BUCKET_ID=certbot-bucket-th0r
+    - DOMAINS=salt.th0r.de
     # env API_PASSWORD:
     - secure: "NI8vGrzHw77nkSXv/tfMwey3Tm6X4gKWLGztwtLQQ7oeDigtYiZHkbVN0ETxNkerm5Dg+FkJz+dkm9jOcdri+N6c1982IcjrPQQLBBNMzZDRnA/QiwuDeQ1Fhq/Z/2UKHWKKG7DG4bGGblf2T1jopnFPG4mCDYqQIQSuMDvO0jmdKA3cjm05uhRGytohmlLueDoPPW1tDD7mu8Apk36CVb7BDqDBaQFlnLv7+Vldxd499CcaOFF5/ZrpC9/XVa42bv31VuhiDhdTcE3ARvOIHuaTH7S0BYXTXwOz0Fzhh7OKqUWSnCz0MOEQppFfjXx1F8kesA1K5Hau6EP/23ueQxxDgHIWy/4L1YeGuroDbetDL2iBgfcV+KaoDbpCYqOwPQjeGczwP1pU+xGD0GitIiJc5t+bJLxF7Klvnjz1SkAOTN48LY0KJgheM7SlmTthqPdDQnLIFCKo6dW7KTzyHFgJrAHh2q7+1jonjxYnnUndA4O3kA266pUb2u/kDUqOCaElgyc6rTHvLSR+AddBauz/1JkfU2OvOJTW8VR7NIL1kS5tjmtD0dMNvzkxCik2o2c82w5Zk/mkZ8Yn5J32on43bXu6nFe8g3QY2uR6UuGGX8g09aKpQ06R5Lvn1ks8z1X78dXe5m7fjQ/AbQxKfulFjj9hGVIvfyTudzURGqQ="
 
@@ -29,7 +35,7 @@ before_install:
       openssl aes-256-cbc -K $encrypted_ffc671bd29c0_key -iv $encrypted_ffc671bd29c0_iv
       -in credentials.tar.gz.enc -out credentials.tar.gz -d
   # credentials.tar.gz contains:
-  # - saltdeloyer-gpg.priv
+  # - saltdeployer-gpg.priv
   # - saltdeployer.priv
   # - saltdeloyer.pub
   # - saltstack_deployment_secret.json
@@ -61,9 +67,11 @@ install:
       --project ${CLUSTER_PROJECT}
 
 before_script:
-  - export GPG_SALTDEPLOYER_PRIVATE_KEY=$(base64 -w0 saltdeloyer-gpg.priv)
+  - export GPG_SALTDEPLOYER_PRIVATE_KEY=$(base64 -w0 saltdeployer-gpg.priv)
   - export SSH_SALTDEPOYER_PUB=$(base64 -w0 saltdeployer.pub)
   - export SSH_SALTDEPLOYER_PRIV=$(base64 -w0 saltdeployer.priv)
+  - export CERTBOT_BUCKET_CREDENTIAL=$(base64 -w0 dns_secret.json)
+  - export CERTBOT_DNS_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
 
 script:
   - python2 /opt/sharedlibs/python/render_k8s.py
