@@ -40,7 +40,7 @@ data:
 
     ext_pillar:
       - git:
-        - base git@github.com:Cookiiiies/pillar.git:
+        - master git@github.com:Cookiiiies/pillar.git:
           - env: base
           - root: pillar
           - privkey: /etc/salt/secrets/ssh_keys/saltdeployer.priv
@@ -49,7 +49,7 @@ data:
       - google_storage:
         - credentials: /etc/salt/secrets/gcp/credentials.json
         - project: {{ PILLAR_BUCKET_PROJECT }}
-        - bucke_id: {{ PILLAR_BUCKET_ID }}
+        - bucked_id: {{ PILLAR_BUCKET_ID }}
         - prefix: ".pem"
 
     ############################################
