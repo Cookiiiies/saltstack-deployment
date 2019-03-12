@@ -28,6 +28,10 @@ spec:
           env:
             - name: SALT_API_HOST
               value: {{ SALT_API_HOST }}
+            - name: GOOGLE_CREDENTIALS_FILE_BUCKET
+              value: "/secrets/storage.json"
+            - name: BUCKET_ID
+              value: {{ PILLAR_BUCKET_ID }}
           readinessProbe:
             httpGet:
               scheme: HTTPS
@@ -44,6 +48,8 @@ spec:
           volumeMounts:
             - mountPath: /etc/nginx/conf.d
               name: nginx-proxy
+            - mountPath: /secrets/
+              name: gcp-nginx-secret
 
         - name: saltstack-master
           image: {{ IMAGE_MASTER }}
@@ -142,4 +148,6 @@ spec:
             name: {{ DEPLOYMENT_NAME }}-nginx-proxy
         - name: saltstack-pid
           emptyDir: {}
-
+        - name: gcp-nginx-secret
+          secret:
+            secretName: {{ DEPLOYMENT_NAME }}-nginx-gcp
