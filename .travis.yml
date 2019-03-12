@@ -70,8 +70,8 @@ before_script:
   - export GPG_SALTDEPLOYER_PRIVATE_KEY=$(base64 -w0 saltdeployer-gpg.priv)
   - export SSH_SALTDEPOYER_PUB=$(base64 -w0 saltdeployer.pub)
   - export SSH_SALTDEPLOYER_PRIV=$(base64 -w0 saltdeployer.priv)
-  - export CERTBOT_BUCKET_CREDENTIAL=$(base64 -w0 dns_secret.json)
-  - export CERTBOT_DNS_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
+  - export CERTBOT_BUCKET_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
+  - export CERTBOT_DNS_CREDENTIAL=$(base64 -w0 dns_secret.json)
   - export PILLAR_BUCKET_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
 
 script:
