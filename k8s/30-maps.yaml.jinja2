@@ -96,7 +96,7 @@ data:
 
       ssl on;
       ssl_protocols  TLSv1.2;
-      ssl_certificate         /var/ssl/{{ SALT_API_HOST }}.fullchain.pem;
+      ssl_certificate         /var/ssl/{{ SALT_API_HOST }}.bundle.pem;
       ssl_certificate_key     /var/ssl/{{ SALT_API_HOST }}.key.pem;
       server_name {{ SALT_API_HOST }} _;
       charset UTF-8;
