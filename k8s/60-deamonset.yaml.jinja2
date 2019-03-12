@@ -26,6 +26,10 @@ spec:
             value: "{{ API_PASSWORD }}"
           - name: SALT_API_HOST
             value: "{{ DEPLOYMENT_NAME }}-api"
+          - name: MINION_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
         livenessProbe:
           exec:
             command:

@@ -9,6 +9,7 @@ data:
     ############################################
     # salt master configuration
     master: {{ DEPLOYMENT_NAME }}-master
+    id: {{ MINION_NAME }}
 
 ---
 kind: ConfigMap
