@@ -32,6 +32,10 @@ spec:
               value: "/secrets/storage.json"
             - name: BUCKET_ID
               value: {{ PILLAR_BUCKET_ID }}
+            - name: NAMESPACE
+              value: {{ NAMESPACE }}
+            - name: DEPLOYEMENT_NAME
+              value: {{ DEPLOYEMENT_NAME }}
           readinessProbe:
             httpGet:
               scheme: HTTPS

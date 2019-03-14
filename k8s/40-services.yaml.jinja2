@@ -23,7 +23,7 @@ metadata:
   name: {{ DEPLOYMENT_NAME }}-api
   namespace: {{ NAMESPACE }}
   labels:
-    name: {{ DEPLOYMENT_NAME }}-master
+    name: {{ DEPLOYMENT_NAME }}-api
 spec:
   type: NodePort
   ports:
@@ -36,3 +36,25 @@ spec:
   selector:
     name: {{ DEPLOYMENT_NAME }}-master
 
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ DEPLOYMENT_NAME }}-ingress
+  namespace: {{ NAMESPACE }}
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "{{ SALT_API_HOST | replace(".", "-") | lower }}"
+spec:
+  tls:
+    - secretName: {{ DEPLOYMENT_NAME }}-master-api-tls
+  backend:
+    serviceName: {{ DEPLOYMENT_NAME }}-api
+    servicePort: {{ DEPLOYMENT_NAME }}-80
+  rules:
+  - host: {{ SALT_API_HOST }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ DEPLOYMENT_NAME }}-api
+          servicePort: {{ DEPLOYMENT_NAME }}-80
