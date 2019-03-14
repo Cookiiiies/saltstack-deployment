@@ -38,12 +38,12 @@ spec:
               value: {{ DEPLOYMENT_NAME }}
           readinessProbe:
             httpGet:
-              scheme: HTTPS
+              scheme: HTTP
               path: /health
               port: 80
           livenessProbe:
             httpGet:
-              scheme: HTTPS
+              scheme: HTTP
               path: /health
               port: 80
           ports:
