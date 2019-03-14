@@ -40,15 +40,14 @@ spec:
             httpGet:
               scheme: HTTPS
               path: /health
-              port: 443
+              port: 80
           livenessProbe:
             httpGet:
               scheme: HTTPS
               path: /health
-              port: 443
+              port: 80
           ports:
             - containerPort: 80
-            - containerPort: 443
           volumeMounts:
             - mountPath: /etc/nginx/conf.d
               name: nginx-proxy
