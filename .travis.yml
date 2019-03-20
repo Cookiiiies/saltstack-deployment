@@ -22,7 +22,7 @@ env:
     - NAMESPACE=salt
     - API_USERNAME=saltdeployer
     - SALT_API_HOST=salt.th0r.de
-    - CERTBOT_SERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
+    - CERTBOT_SERVER="https://acme-v02.api.letsencrypt.org/directory"
     - PILLAR_BUCKET_CREDENTIAL=/etc/salt/secrets/gcp/credentials.json
     - PILLAR_BUCKET_PROJECT=gcp-home-dev
     - PILLAR_BUCKET_ID=certbot-bucket-th0r
