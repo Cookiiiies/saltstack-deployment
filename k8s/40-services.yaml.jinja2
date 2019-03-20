@@ -44,6 +44,7 @@ metadata:
   namespace: {{ NAMESPACE }}
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "{{ SALT_API_HOST | replace(".", "-") | lower }}"
+    kubernetes.io/ingress.allow-http: "false"
 spec:
   tls:
     - secretName: {{ DEPLOYMENT_NAME }}-master-api-tls
