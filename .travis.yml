@@ -14,7 +14,7 @@ env:
     - DEPLOYMENT_NAME=salt
     - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:fd4816cc60c21c505ed3e46cf89e6e70f316f5d5
     - IMAGE_NGINX=gcr.io/gcp-home-dev/salt-nginx:f10b07230a2c35adae0319489d3d2d063a5523f0
-    - IMAGE_MINION=gcr.io/gcp-home-dev/saltstack-minion:fe561c5375eb71d8a38b8b4db1c7735a36df6b62
+    - IMAGE_MINION=gcr.io/gcp-home-dev/saltstack-minion:30e803e3969c9f6138673c3e6e0178dd5b8cc09e
     - IMAGE_CERTBOT=gcr.io/gcp-home-dev/certbot:af04a50b66eecde8dec4971cc82e3bbe9c696beb
     - IMAGE_API=gcr.io/gcp-home-dev/saltstack-api:a9b96145dad6f56a73e2f4a9a4a7f25d6db7dbbc
     - MAX_REPLICAS=1
