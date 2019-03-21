@@ -144,12 +144,15 @@ spec:
         - name: master-gcp-secret
           secret:
             secretName: {{ DEPLOYMENT_NAME }}-master-gcp-access
+            defaultMode: 256
         - name: gpg-keys
           secret:
             secretName: {{ DEPLOYMENT_NAME }}-saltdeployer-gpg-keys
+            defaultMode: 256
         - name: ssh-keys
           secret:
             secretName: {{ DEPLOYMENT_NAME }}-saltdeployer-ssh-keys
+            defaultMode: 256
         - name: nginx-proxy
           configMap:
             name: {{ DEPLOYMENT_NAME }}-nginx-proxy
@@ -158,3 +161,4 @@ spec:
         - name: gcp-nginx-secret
           secret:
             secretName: {{ DEPLOYMENT_NAME }}-nginx-gcp
+            defaultMode: 256
