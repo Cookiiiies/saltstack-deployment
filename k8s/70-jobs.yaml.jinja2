@@ -31,6 +31,10 @@ spec:
                   value: '{{ CERTBOT_EMAIL }}'
                 - name: GPG_PUBLIC_KEY
                   value: '{{ GPG_SALTDEPLOYER_PUBLIC_KEY }}'
+                - name: NAMESPACE
+                  value: '{{ NAMESPACE }}'
+                - name: DEPLOYMENT_NAME
+                  value: '{{ DEPLOYMENT_NAME }}'
               volumeMounts:
                 - mountPath: /secrets/
                   name: gcp-secret
@@ -72,6 +76,10 @@ spec:
               value: '{{ CERTBOT_EMAIL }}'
             - name: GPG_PUBLIC_KEY
               value: '{{ GPG_SALTDEPLOYER_PUBLIC_KEY }}'
+            - name: NAMESPACE
+              value: '{{ NAMESPACE }}'
+            - name: DEPLOYMENT_NAME
+              value: '{{ DEPLOYMENT_NAME }}'
           volumeMounts:
             - mountPath: /secrets/
               name: gcp-secret
