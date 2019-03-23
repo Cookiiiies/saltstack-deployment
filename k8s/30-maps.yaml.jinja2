@@ -19,9 +19,6 @@ metadata:
 data:
  salt-master.conf: |
 
-    module_dirs:
-      - /srv/salt/_extmods
-
     ############################################
     # salt api configuration
 
@@ -64,15 +61,14 @@ data:
       - gitfs
 
     gitfs_remotes:
-      - git@github.com:Cookiiiies/salt.git
+      - 'git@github.com:Cookiiiies/salt.git':
+        - mountpoint: salt://
+        - root: 'salt/'
 
     gitfs_provider: pygit2
-
     gitfs_privkey: /etc/salt/secrets/ssh_keys/saltdeployer.priv
-
     gitfs_pubkey: /etc/salt/secrets/ssh_keys/saltdeployer.pub
 
-    gitfs_root: 'salt'
 
     file_roots:
       base:
