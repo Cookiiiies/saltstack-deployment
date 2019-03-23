@@ -3,6 +3,7 @@ language: python
 cache:
   directories:
     - "/opt/sharedlibs"
+  pip: true
 
 env:
   global:
@@ -26,7 +27,7 @@ env:
     - PILLAR_BUCKET_CREDENTIAL=/etc/salt/secrets/gcp/credentials.json
     - PILLAR_BUCKET_PROJECT=gcp-home-dev
     - PILLAR_BUCKET_ID=certbot-bucket-th0r
-    - DOMAINS=salt.th0r.de
+    - DOMAINS=*.th0r.de
     - GPG_KEY_ID=7BA5E9344E98EF5D2078064EB2A9B4E31255DAEB
     - CERTBOT_EMAIL=Cookiiiies@github.com
     # env API_PASSWORD:
@@ -70,10 +71,10 @@ install:
 
 before_script:
   - export GPG_SALTDEPLOYER_PRIVATE_KEY=$(base64 -w0 saltdeployer-gpg.priv)
-  - gpg --import saltdeployer-gpg.priv
-  - gpg --armor --export ${GPG_KEY_ID} > saltdeployer-gpg.pub
+  - gpg --batch --yes --import saltdeployer-gpg.priv
+  - gpg --batch --yes --armor --export ${GPG_KEY_ID} > saltdeployer-gpg.pub
   - export GPG_SALTDEPLOYER_PUBLIC_KEY=$(base64 -w0 saltdeployer-gpg.pub)
-  - gpg --yes --delete-secret-and-public-key ${GPG_KEY_ID}
+  - gpg --batch --yes --delete-secret-and-public-key ${GPG_KEY_ID}
 
   - export SSH_SALTDEPOYER_PUB=$(base64 -w0 saltdeployer.pub)
   - export SSH_SALTDEPLOYER_PRIV=$(base64 -w0 saltdeployer.priv)
