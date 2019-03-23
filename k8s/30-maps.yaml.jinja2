@@ -48,10 +48,10 @@ data:
           - pubkey: /etc/salt/secrets/ssh_keys/saltdeployer.pub
 
       - google_storage:
-        - credentials: /etc/salt/secrets/gcp/credentials.json
-        - project: {{ PILLAR_BUCKET_PROJECT }}
-        - bucked_id: {{ PILLAR_BUCKET_ID }}
-        - prefix: ".pem"
+        credentials: /etc/salt/secrets/gcp/credentials.json
+        project: {{ PILLAR_BUCKET_PROJECT }}
+        bucked_id: {{ PILLAR_BUCKET_ID }}
+        prefix: ".pem"
 
     ############################################
     # fileserver configuration
@@ -87,12 +87,15 @@ data:
       server_name {{ SALT_API_HOST }};
 
       location /health {
+        add_header  X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
         access_log off;
         return 200 "healthy\n";
+
       }
 
       location / {
         proxy_redirect off;
+        proxy_set_header        X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
         proxy_set_header        Host $host;
         proxy_set_header        X-Real-IP $remote_addr;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
