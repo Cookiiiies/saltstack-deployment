@@ -29,6 +29,8 @@ spec:
                   value: "/secrets/bucket.json"
                 - name: EMAIL
                   value: {{ CERTBOT_EMAIL }}
+                - name: GPG_PUBLIC_KEY
+                  value: {{ GPG_SALTDEPLOYER_PUBLIC_KEY }}
               volumeMounts:
                 - mountPath: /secrets/
                   name: gcp-secret
@@ -68,6 +70,8 @@ spec:
               value: "/secrets/bucket.json"
             - name: EMAIL
               value: {{ CERTBOT_EMAIL }}
+            - name: GPG_PUBLIC_KEY
+              value: {{ GPG_SALTDEPLOYER_PUBLIC_KEY }}
           volumeMounts:
             - mountPath: /secrets/
               name: gcp-secret

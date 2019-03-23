@@ -15,7 +15,7 @@ env:
     - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:d0fa3f3c19b130f0d99207d74108152ae80e8f5b
     - IMAGE_NGINX=gcr.io/gcp-home-dev/salt-nginx:f10b07230a2c35adae0319489d3d2d063a5523f0
     - IMAGE_MINION=gcr.io/gcp-home-dev/saltstack-minion:30e803e3969c9f6138673c3e6e0178dd5b8cc09e
-    - IMAGE_CERTBOT=gcr.io/gcp-home-dev/certbot:af04a50b66eecde8dec4971cc82e3bbe9c696beb
+    - IMAGE_CERTBOT=gcr.io/gcp-home-dev/certbot:b8eb54ebda09c8433abad9847358781baef61a46
     - IMAGE_API=gcr.io/gcp-home-dev/saltstack-api:a9b96145dad6f56a73e2f4a9a4a7f25d6db7dbbc
     - MAX_REPLICAS=1
     - MIN_REPLICAS=1
@@ -27,6 +27,7 @@ env:
     - PILLAR_BUCKET_PROJECT=gcp-home-dev
     - PILLAR_BUCKET_ID=certbot-bucket-th0r
     - DOMAINS=salt.th0r.de
+    - GPG_KEY_ID=7BA5E9344E98EF5D2078064EB2A9B4E31255DAEB
     - CERTBOT_EMAIL=Cookiiiies@github.com
     # env API_PASSWORD:
     - secure: "NI8vGrzHw77nkSXv/tfMwey3Tm6X4gKWLGztwtLQQ7oeDigtYiZHkbVN0ETxNkerm5Dg+FkJz+dkm9jOcdri+N6c1982IcjrPQQLBBNMzZDRnA/QiwuDeQ1Fhq/Z/2UKHWKKG7DG4bGGblf2T1jopnFPG4mCDYqQIQSuMDvO0jmdKA3cjm05uhRGytohmlLueDoPPW1tDD7mu8Apk36CVb7BDqDBaQFlnLv7+Vldxd499CcaOFF5/ZrpC9/XVa42bv31VuhiDhdTcE3ARvOIHuaTH7S0BYXTXwOz0Fzhh7OKqUWSnCz0MOEQppFfjXx1F8kesA1K5Hau6EP/23ueQxxDgHIWy/4L1YeGuroDbetDL2iBgfcV+KaoDbpCYqOwPQjeGczwP1pU+xGD0GitIiJc5t+bJLxF7Klvnjz1SkAOTN48LY0KJgheM7SlmTthqPdDQnLIFCKo6dW7KTzyHFgJrAHh2q7+1jonjxYnnUndA4O3kA266pUb2u/kDUqOCaElgyc6rTHvLSR+AddBauz/1JkfU2OvOJTW8VR7NIL1kS5tjmtD0dMNvzkxCik2o2c82w5Zk/mkZ8Yn5J32on43bXu6nFe8g3QY2uR6UuGGX8g09aKpQ06R5Lvn1ks8z1X78dXe5m7fjQ/AbQxKfulFjj9hGVIvfyTudzURGqQ="
@@ -69,6 +70,11 @@ install:
 
 before_script:
   - export GPG_SALTDEPLOYER_PRIVATE_KEY=$(base64 -w0 saltdeployer-gpg.priv)
+  - gpg --import saltdeloyer-gpg.priv
+  - gpg --armor --export ${GPG_KEY_ID} > saltdeloyer-gpg.pub
+  - export GPG_SALTDEPLOYER_PUBLIC_KEY=$(base64 -w0 saltdeloyer-gpg.pub)
+  - gpg --delete-secret-and-public-key ${GPG_KEY_ID}
+
   - export SSH_SALTDEPOYER_PUB=$(base64 -w0 saltdeployer.pub)
   - export SSH_SALTDEPLOYER_PRIV=$(base64 -w0 saltdeployer.priv)
   - export CERTBOT_BUCKET_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
