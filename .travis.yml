@@ -73,7 +73,7 @@ before_script:
   - gpg --import saltdeployer-gpg.priv
   - gpg --armor --export ${GPG_KEY_ID} > saltdeployer-gpg.pub
   - export GPG_SALTDEPLOYER_PUBLIC_KEY=$(base64 -w0 saltdeployer-gpg.pub)
-  - gpg --delete-secret-and-public-key ${GPG_KEY_ID}
+  - gpg --yes --delete-secret-and-public-key ${GPG_KEY_ID}
 
   - export SSH_SALTDEPOYER_PUB=$(base64 -w0 saltdeployer.pub)
   - export SSH_SALTDEPLOYER_PRIV=$(base64 -w0 saltdeployer.priv)
