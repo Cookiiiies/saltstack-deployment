@@ -48,10 +48,10 @@ data:
           - pubkey: /etc/salt/secrets/ssh_keys/saltdeployer.pub
 
       - google_storage:
-        credentials: /etc/salt/secrets/gcp/credentials.json
-        project: {{ PILLAR_BUCKET_PROJECT }}
-        bucked_id: {{ PILLAR_BUCKET_ID }}
-        prefix: ".pem"
+          credentials: /etc/salt/secrets/gcp/credentials.json
+          project: {{ PILLAR_BUCKET_PROJECT }}
+          bucked_id: {{ PILLAR_BUCKET_ID }}
+          prefix: ".pem"
 
     ############################################
     # fileserver configuration
