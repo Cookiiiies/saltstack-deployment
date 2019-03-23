@@ -26,8 +26,8 @@ spec:
           image: {{ IMAGE_NGINX }}
           imagePullPolicy: Always
           env:
-            - name: SALT_API_HOST
-              value: {{ SALT_API_HOST }}
+            - name: SALT_API_HOST_CERT
+              value: {{ SALT_API_HOST_CERT }}
             - name: GOOGLE_CREDENTIALS_FILE_BUCKET
               value: "/secrets/storage.json"
             - name: BUCKET_ID
