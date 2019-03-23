@@ -51,7 +51,7 @@ data:
           credentials: /etc/salt/secrets/gcp/credentials.json
           project: {{ PILLAR_BUCKET_PROJECT }}
           bucked_id: {{ PILLAR_BUCKET_ID }}
-          prefix: ".pem"
+          suffix: ".pem"
 
     ############################################
     # fileserver configuration
