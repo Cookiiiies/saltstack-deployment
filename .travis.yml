@@ -17,7 +17,7 @@ env:
     - LOG_LEVEL=warning
     - DEPLOYMENT_NAME=salt
     - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:d0fa3f3c19b130f0d99207d74108152ae80e8f5b
-    - IMAGE_NGINX=gcr.io/gcp-home-dev/salt-nginx:eef585e008da5b3be70713b4436e5b2c7cee46bc
+    - IMAGE_NGINX=gcr.io/gcp-home-dev/salt-nginx:a46e3c3c1cffd151c62457634a0a7a45ee915990
     - IMAGE_MINION=gcr.io/gcp-home-dev/saltstack-minion:30e803e3969c9f6138673c3e6e0178dd5b8cc09e
     - IMAGE_CERTBOT=gcr.io/gcp-home-dev/certbot:bb586bfa531d4e6b5d5c3b0684367f4c9b168704
     - IMAGE_API=gcr.io/gcp-home-dev/saltstack-api:a9b96145dad6f56a73e2f4a9a4a7f25d6db7dbbc
