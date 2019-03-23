@@ -5,6 +5,9 @@ cache:
     - "/opt/sharedlibs"
   pip: true
 
+before_cache:
+  - rm -f $HOME/.cache/pip/log/debug.log
+
 env:
   global:
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
