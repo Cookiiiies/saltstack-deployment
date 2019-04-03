@@ -31,6 +31,8 @@ data:
         {{ API_USERNAME }}:
           - '@wheel':
             - key.gen_accept
+          - '*':
+            - pillar.get
 
     ############################################
     # pillar configuration
