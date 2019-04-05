@@ -1,91 +1,69 @@
 language: python
-
 cache:
   directories:
-    - "/opt/sharedlibs"
+  - "/opt/sharedlibs"
   pip: true
-
 before_cache:
-  - rm -f $HOME/.cache/pip/log/debug.log
-
+- rm -f $HOME/.cache/pip/log/debug.log
 env:
   global:
-    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
-    - CLUSTER_NAME=standard-cluster-1
-    - CLUSTER_PROJECT=gcp-home-dev
-    - CLUSTER_ZONE=europe-west3-a
-    - LOG_LEVEL=warning
-    - DEPLOYMENT_NAME=salt
-    - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:671d359d7f813e8388d2e243cf12684aa7b3bead
-    - IMAGE_NGINX=gcr.io/gcp-home-dev/salt-nginx:a46e3c3c1cffd151c62457634a0a7a45ee915990
-    - IMAGE_MINION=gcr.io/gcp-home-dev/saltstack-minion:30e803e3969c9f6138673c3e6e0178dd5b8cc09e
-    - IMAGE_CERTBOT=gcr.io/gcp-home-dev/certbot:bb586bfa531d4e6b5d5c3b0684367f4c9b168704
-    - IMAGE_API=gcr.io/gcp-home-dev/saltstack-api:a9b96145dad6f56a73e2f4a9a4a7f25d6db7dbbc
-    - MAX_REPLICAS=1
-    - MIN_REPLICAS=1
-    - NAMESPACE=salt
-    - API_USERNAME=saltdeployer
-    - SALT_API_HOST=salt.th0r.de
-    - SALT_API_HOST_CERT=wildcard.th0r.de
-    - CERTBOT_SERVER="https://acme-v02.api.letsencrypt.org/directory"
-    - PILLAR_BUCKET_CREDENTIAL=/etc/salt/secrets/gcp/credentials.json
-    - PILLAR_BUCKET_PROJECT=gcp-home-dev
-    - PILLAR_BUCKET_ID=certbot-bucket-th0r
-    - DOMAINS=*.th0r.de
-    - GPG_KEY_ID=7BA5E9344E98EF5D2078064EB2A9B4E31255DAEB
-    - CERTBOT_EMAIL=Cookiiiies@github.com
-    # env API_PASSWORD:
-    - secure: "NI8vGrzHw77nkSXv/tfMwey3Tm6X4gKWLGztwtLQQ7oeDigtYiZHkbVN0ETxNkerm5Dg+FkJz+dkm9jOcdri+N6c1982IcjrPQQLBBNMzZDRnA/QiwuDeQ1Fhq/Z/2UKHWKKG7DG4bGGblf2T1jopnFPG4mCDYqQIQSuMDvO0jmdKA3cjm05uhRGytohmlLueDoPPW1tDD7mu8Apk36CVb7BDqDBaQFlnLv7+Vldxd499CcaOFF5/ZrpC9/XVa42bv31VuhiDhdTcE3ARvOIHuaTH7S0BYXTXwOz0Fzhh7OKqUWSnCz0MOEQppFfjXx1F8kesA1K5Hau6EP/23ueQxxDgHIWy/4L1YeGuroDbetDL2iBgfcV+KaoDbpCYqOwPQjeGczwP1pU+xGD0GitIiJc5t+bJLxF7Klvnjz1SkAOTN48LY0KJgheM7SlmTthqPdDQnLIFCKo6dW7KTzyHFgJrAHh2q7+1jonjxYnnUndA4O3kA266pUb2u/kDUqOCaElgyc6rTHvLSR+AddBauz/1JkfU2OvOJTW8VR7NIL1kS5tjmtD0dMNvzkxCik2o2c82w5Zk/mkZ8Yn5J32on43bXu6nFe8g3QY2uR6UuGGX8g09aKpQ06R5Lvn1ks8z1X78dXe5m7fjQ/AbQxKfulFjj9hGVIvfyTudzURGqQ="
-
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+  - CLUSTER_NAME=standard-cluster-1
+  - CLUSTER_PROJECT=gcp-home-dev
+  - CLUSTER_ZONE=europe-west3-a
+  - LOG_LEVEL=warning
+  - DEPLOYMENT_NAME=salt
+  - IMAGE_MASTER=gcr.io/gcp-home-dev/saltstack-master:671d359d7f813e8388d2e243cf12684aa7b3bead
+  - IMAGE_NGINX=gcr.io/gcp-home-dev/salt-nginx:a46e3c3c1cffd151c62457634a0a7a45ee915990
+  - IMAGE_MINION=gcr.io/gcp-home-dev/saltstack-minion:30e803e3969c9f6138673c3e6e0178dd5b8cc09e
+  - IMAGE_CERTBOT=gcr.io/gcp-home-dev/certbot:bb586bfa531d4e6b5d5c3b0684367f4c9b168704
+  - IMAGE_API=gcr.io/gcp-home-dev/saltstack-api:a9b96145dad6f56a73e2f4a9a4a7f25d6db7dbbc
+  - MAX_REPLICAS=1
+  - MIN_REPLICAS=1
+  - NAMESPACE=salt
+  - API_USERNAME=saltdeployer
+  - SALT_API_HOST=salt.th0r.de
+  - SALT_API_HOST_CERT=wildcard.th0r.de
+  - CERTBOT_SERVER="https://acme-v02.api.letsencrypt.org/directory"
+  - PILLAR_BUCKET_CREDENTIAL=/etc/salt/secrets/gcp/credentials.json
+  - PILLAR_BUCKET_PROJECT=gcp-home-dev
+  - PILLAR_BUCKET_ID=certbot-bucket-th0r
+  - DOMAINS=*.th0r.de
+  - GPG_KEY_ID=7BA5E9344E98EF5D2078064EB2A9B4E31255DAEB
+  - CERTBOT_EMAIL=Cookiiiies@github.com
+  - secure: NI8vGrzHw77nkSXv/tfMwey3Tm6X4gKWLGztwtLQQ7oeDigtYiZHkbVN0ETxNkerm5Dg+FkJz+dkm9jOcdri+N6c1982IcjrPQQLBBNMzZDRnA/QiwuDeQ1Fhq/Z/2UKHWKKG7DG4bGGblf2T1jopnFPG4mCDYqQIQSuMDvO0jmdKA3cjm05uhRGytohmlLueDoPPW1tDD7mu8Apk36CVb7BDqDBaQFlnLv7+Vldxd499CcaOFF5/ZrpC9/XVa42bv31VuhiDhdTcE3ARvOIHuaTH7S0BYXTXwOz0Fzhh7OKqUWSnCz0MOEQppFfjXx1F8kesA1K5Hau6EP/23ueQxxDgHIWy/4L1YeGuroDbetDL2iBgfcV+KaoDbpCYqOwPQjeGczwP1pU+xGD0GitIiJc5t+bJLxF7Klvnjz1SkAOTN48LY0KJgheM7SlmTthqPdDQnLIFCKo6dW7KTzyHFgJrAHh2q7+1jonjxYnnUndA4O3kA266pUb2u/kDUqOCaElgyc6rTHvLSR+AddBauz/1JkfU2OvOJTW8VR7NIL1kS5tjmtD0dMNvzkxCik2o2c82w5Zk/mkZ8Yn5J32on43bXu6nFe8g3QY2uR6UuGGX8g09aKpQ06R5Lvn1ks8z1X78dXe5m7fjQ/AbQxKfulFjj9hGVIvfyTudzURGqQ=
 before_install:
-  - >-
-      openssl aes-256-cbc -K $encrypted_ffc671bd29c0_key -iv $encrypted_ffc671bd29c0_iv
-      -in credentials.tar.gz.enc -out credentials.tar.gz -d
-  # credentials.tar.gz contains:
-  # - saltdeployer-gpg.priv
-  # - saltdeployer.priv
-  # - saltdeloyer.pub
-  # - saltstack_deployment_secret.json
-  - tar -xzf credentials.tar.gz
-  - sudo apt-get install apt-transport-https git
-  - export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
-  - >-
-      echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" |
-      sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-  - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-  - sudo apt-get update
-  - mkdir -p /opt/sharedlibs/
-  - >-
-      /bin/bash -c
-      'if ls /opt/sharedlibs/.git ;
-      then git -C /opt/sharedlibs/ pull;
-      else git clone https://github.com/Cookiiiies/sharedlibs.git /opt/sharedlibs/; fi'
-
+- openssl aes-256-cbc -K $encrypted_ffc671bd29c0_key -iv $encrypted_ffc671bd29c0_iv
+  -in credentials.tar.gz.enc -out credentials.tar.gz -d
+- tar -xzf credentials.tar.gz
+- sudo apt-get install apt-transport-https git
+- export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+- echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee
+  -a /etc/apt/sources.list.d/google-cloud-sdk.list
+- curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+- sudo apt-get update
+- mkdir -p /opt/sharedlibs/
+- "/bin/bash -c 'if ls /opt/sharedlibs/.git ; then git -C /opt/sharedlibs/ pull; else
+  git clone https://github.com/Cookiiiies/sharedlibs.git /opt/sharedlibs/; fi'"
 install:
-  - pip install -r pip/requirements.txt
-  - sudo apt-get install google-cloud-sdk kubectl
-  - kubectl version --client
-  - gcloud --version
-  - mkdir -p ${HOME}/k8s_descriptions
-  - gcloud auth activate-service-account --key-file saltstack_deployment_secret.json
-  - >-
-      gcloud container clusters get-credentials ${CLUSTER_NAME}
-      --zone ${CLUSTER_ZONE}
-      --project ${CLUSTER_PROJECT}
-
+- pip install -r pip/requirements.txt
+- sudo apt-get install google-cloud-sdk kubectl
+- kubectl version --client
+- gcloud --version
+- mkdir -p ${HOME}/k8s_descriptions
+- gcloud auth activate-service-account --key-file saltstack_deployment_secret.json
+- gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${CLUSTER_ZONE}
+  --project ${CLUSTER_PROJECT}
 before_script:
-  - export GPG_SALTDEPLOYER_PRIVATE_KEY=$(base64 -w0 saltdeployer-gpg.priv)
-  - gpg --batch --yes --import saltdeployer-gpg.priv
-  - gpg --batch --yes --armor --export ${GPG_KEY_ID} > saltdeployer-gpg.pub
-  - export GPG_SALTDEPLOYER_PUBLIC_KEY=$(base64 -w0 saltdeployer-gpg.pub)
-  - gpg --batch --yes --delete-secret-and-public-key ${GPG_KEY_ID}
-
-  - export SSH_SALTDEPOYER_PUB=$(base64 -w0 saltdeployer.pub)
-  - export SSH_SALTDEPLOYER_PRIV=$(base64 -w0 saltdeployer.priv)
-  - export CERTBOT_BUCKET_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
-  - export CERTBOT_DNS_CREDENTIAL=$(base64 -w0 dns_secret.json)
-  - export PILLAR_BUCKET_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
-
-
+- export GPG_SALTDEPLOYER_PRIVATE_KEY=$(base64 -w0 saltdeployer-gpg.priv)
+- gpg --batch --yes --import saltdeployer-gpg.priv
+- gpg --batch --yes --armor --export ${GPG_KEY_ID} > saltdeployer-gpg.pub
+- export GPG_SALTDEPLOYER_PUBLIC_KEY=$(base64 -w0 saltdeployer-gpg.pub)
+- gpg --batch --yes --delete-secret-and-public-key ${GPG_KEY_ID}
+- export SSH_SALTDEPOYER_PUB=$(base64 -w0 saltdeployer.pub)
+- export SSH_SALTDEPLOYER_PRIV=$(base64 -w0 saltdeployer.priv)
+- export CERTBOT_BUCKET_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
+- export CERTBOT_DNS_CREDENTIAL=$(base64 -w0 dns_secret.json)
+- export PILLAR_BUCKET_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
 script:
-  - python2 /opt/sharedlibs/python/deploy_k8s.py --disable_salt_api True
+- python2 /opt/sharedlibs/python/deploy_k8s.py --disable_salt_api True
