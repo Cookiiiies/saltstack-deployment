@@ -86,5 +86,9 @@ before_script:
   - export CERTBOT_DNS_CREDENTIAL=$(base64 -w0 dns_secret.json)
   - export PILLAR_BUCKET_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
 
+  - export SALT_API_URL=${SALT_API_HOST}
+  - export SALT_API_USERNAME=${API_USERNAME}
+  - export SALT_API_PASSWORD=${API_PASSWORD}
+
 script:
   - python2 /opt/sharedlibs/python/deploy_k8s.py
