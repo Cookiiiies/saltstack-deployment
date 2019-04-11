@@ -80,7 +80,7 @@ data:
     reactor:
       - 'salt/minion/*/start':
         - salt://reactor/sync_master.sls
-      - 'salt/minion/*/shutdown':
+      - 'salt/minion/shutdown':
         - salt://reactor/delete.sls
 
 ---

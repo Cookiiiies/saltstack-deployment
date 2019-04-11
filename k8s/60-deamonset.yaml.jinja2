@@ -52,7 +52,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - 'salt-call event.send /minion/shutdown'
+                - 'salt-call event.send salt/minion/shutdown'
         resources:
           limits:
             memory: 500Mi
