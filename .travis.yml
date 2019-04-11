@@ -48,7 +48,7 @@ before_install:
 - "/bin/bash -c 'if ls /opt/sharedlibs/.git ; then git -C /opt/sharedlibs/ pull; else
   git clone https://github.com/Cookiiiies/sharedlibs.git /opt/sharedlibs/; fi'"
 install:
-- pip install -r pip/requirements.txt
+- pip3 install -r pip/requirements.txt
 - sudo apt-get install google-cloud-sdk kubectl
 - kubectl version --client
 - gcloud --version
@@ -68,4 +68,4 @@ before_script:
 - export CERTBOT_DNS_CREDENTIAL=$(base64 -w0 dns_secret.json)
 - export PILLAR_BUCKET_CREDENTIAL=$(base64 -w0 saltstack_deployment_secret.json)
 script:
-- python2 /opt/sharedlibs/python/deploy_k8s.py --disable_salt_api True
+- python3 /opt/sharedlibs/python/deploy_k8s.py --disable_salt_api True
