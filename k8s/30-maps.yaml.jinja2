@@ -76,6 +76,13 @@ data:
     file_roots:
       base:
         - /srv/salt
+
+    reactor:
+      - 'salt/minion/*/start':
+        - salt://reactor/sync_master.sls
+      - 'salt/minion/*/shutdown':
+        - salt://reactor/delete.sls
+
 ---
 kind: ConfigMap
 apiVersion: v1
